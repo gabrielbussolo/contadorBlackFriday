@@ -16,3 +16,30 @@ function diaBlackFriday(){
 
     return diaBlackFriday
 }
+
+function quantoFaltaParaBlack(diferencaEntredatas){
+    const horasDiferenca = new Date(diferencaEntredatas)
+
+    const dias = Math.floor(diferencaEntredatas / (24*3600*1000))
+    const horas = horasDiferenca.getUTCHours()
+    const minutos = horasDiferenca.getMinutes()
+    const segundos = horasDiferenca.getSeconds()
+    return {dias, horas, minutos, segundos}
+}
+
+function contagemRegressivaBlackFriday(){
+    const hoje = new Date()
+    let dataDiferenca = Math.abs(diaBlackFriday().getTime() - hoje.getTime())
+    
+    if(hoje.getTime() < diaBlackFriday().getTime()){
+        document.getElementById("black").innerHTML = `
+            ${quantoFaltaParaBlack(dataDiferenca).dias} dias, 
+            ${quantoFaltaParaBlack(dataDiferenca).horas} horas, 
+            ${quantoFaltaParaBlack(dataDiferenca).minutos} minutos, 
+            ${quantoFaltaParaBlack(dataDiferenca).segundos} segundos`
+    } else {
+        document.getElementById('black').innerHTML = `HOJE É BLACK`
+    }
+    
+    setTimeout(contagemRegressivaBlackFriday, 500)
+}
